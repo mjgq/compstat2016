@@ -55,7 +55,8 @@ server <- shinyServer(function(input, output) {
     U <- runif(input$RanNum)  # Generamos números aleatorios con una distribución uniforme
     Finv <- function(U, lambda=input$lambda){return(-log(1-U)/lambda)} # Función inversa
     X <-Finv(U, input$lambda)
-    ks.test(X, pexp)
+    output$summary <- renderPrint({summary(X)})
+    output$ks <- renderPrint({ks.test(X, pexp)})
     
     # Histograma de los números aleatorios uniformes
     hist(U, breaks = as.numeric(input$breaks), main = "Distribución de Probabilidad Uniforme",
@@ -68,7 +69,8 @@ server <- shinyServer(function(input, output) {
     U <- runif(input$RanNum) # creando número aleatorios con una distribución uniforme
     Finv <- function(U, lambda=input$lambda){return(-log(1-U)/lambda)} # Función inversa
     X <-Finv(U, input$lambda)
-    ks.test(X, pexp)
+    output$summary <- renderPrint({summary(X)})
+    output$ks <- renderPrint({ks.test(X, pexp)})
     
     hist(X,breaks = as.numeric(input$breaks), main="Distribución Exponencial",
          ylab = "Frecuencia",col=c("orange"),border = "black")
